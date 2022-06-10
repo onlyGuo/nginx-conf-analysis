@@ -1,6 +1,6 @@
 package com.github.onlyguo.nginx.entity;
 
-import com.github.onlyguo.nginx.conf.Configer;
+import com.github.onlyguo.nginx.conf.Configure;
 
 import java.util.List;
 
@@ -38,12 +38,12 @@ public interface NginxConfItem {
             return (T) this;
         }
         throw new ClassCastException(
-                String.format(Configer.MESSAGE_TEMPLATE.CONF_ITEM_UNCHECKED_CAST, toString(), clazz));
+                String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_UNCHECKED_CAST, toString(), clazz));
     }
 
     /**
      * 列出该配置项中的子配置
-     * List the subconfigurations in this configuration items
+     * List the sub configurations in this configuration items
      * @return
      *      子配置项列表
      *      sub-configurations
@@ -62,7 +62,7 @@ public interface NginxConfItem {
     default NginxConfItem find(String confName){
         if (null == confName || confName.trim().length() == 0){
             throw new IllegalArgumentException(
-                    String.format(Configer.MESSAGE_TEMPLATE.CONF_ITEM_NAME_CAN_NOT_EMPTY, confName));
+                    String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_NAME_CAN_NOT_EMPTY, confName));
         }
         for (NginxConfItem item: listSubItems()){
             if (item.getName().equalsIgnoreCase(confName)){

@@ -16,7 +16,7 @@ public class PropertiesUtil {
      * 读取指定path下的Properties文件
      * Read properties file in the path
      * @param path
-     *      Properties文件路径
+     *      Properties 文件路径
      *      Properties file path
      * @return
      */

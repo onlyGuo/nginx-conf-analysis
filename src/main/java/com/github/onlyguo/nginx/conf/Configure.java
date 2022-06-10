@@ -9,7 +9,7 @@ import java.util.Properties;
  * Common config content
  * @author gsk
  */
-public interface Configer {
+public interface Configure {
 
     Properties PROPERTIES = PropertiesUtil.read("conf.properties");
 
