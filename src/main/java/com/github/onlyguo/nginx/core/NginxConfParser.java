@@ -27,11 +27,16 @@ public class NginxConfParser {
         StringBuilder block = new StringBuilder();
         int inBlock = 0;
         for (String line : lines) {
+            if (block.toString().trim().startsWith("http {")){
+                System.out.println(inBlock);
+            }
+
             if (inBlock > 0){
                 block.append(line).append("\n");
-                if (line.trim().matches("^\\s*([a-z]|[A-Z]|_|[0-9]|\\s)+\\s*\\{\\s*$")) {
+                if (!line.trim().startsWith("#") &&
+                        line.trim().matches("^\\s*(.|\\s)+\\s*\\{\\s*$")) {
                     inBlock++;
-                }else if (line.trim().startsWith("}")){
+                }else if (!line.trim().startsWith("#") && line.trim().startsWith("}")){
                     inBlock--;
                     if (inBlock == 0){
                         items.add(new NginxBlockConfItem(block.toString()));
