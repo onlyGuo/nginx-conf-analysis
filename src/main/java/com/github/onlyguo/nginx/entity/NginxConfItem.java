@@ -2,6 +2,7 @@ package com.github.onlyguo.nginx.entity;
 
 import com.github.onlyguo.nginx.conf.Configure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,6 +71,28 @@ public interface NginxConfItem {
             }
         }
         return null;
+    }
+
+    /**
+     * 查找所有符合指定名称或键的子配置项
+     * Find all sub-configuration items that match the specified name or key
+     * @param confName
+     *      The name of the child configuration item
+     * @return
+     *      子配置项列表
+     */
+    default List<NginxConfItem> findAll(String confName){
+        if (null == confName || confName.trim().length() == 0){
+            throw new IllegalArgumentException(
+                    String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_NAME_CAN_NOT_EMPTY, confName));
+        }
+        List<NginxConfItem> items = new ArrayList<>();
+        for (NginxConfItem item: listSubItems()){
+            if (item.getName().equalsIgnoreCase(confName)){
+                items.add(item);
+            }
+        }
+        return items;
     }
 
     /**
