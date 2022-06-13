@@ -6,7 +6,7 @@
 
     <groupId>pub.conf.nginx</groupId>
     <artifactId>analysis</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>nginx analysis</name>
     <description>Nginx config file analysis tool.</description>
     <url>https://github.com/onlyGuo/nginx-conf-analysis</url>
