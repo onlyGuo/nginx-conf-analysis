@@ -1,6 +1,4 @@
-package com.github.onlyguo.nginx.entity;
-
-import com.github.onlyguo.nginx.conf.Configure;
+package ink.icoding.nginx.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public interface NginxConfItem {
             return (T) this;
         }
         throw new ClassCastException(
-                String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_UNCHECKED_CAST, toString(), clazz));
+                String.format("Cannot cast %s to %s", toString(), clazz.getName()));
     }
 
     /**
@@ -61,9 +59,9 @@ public interface NginxConfItem {
      *      sub-configuration
      */
     default NginxConfItem find(String confName){
-        if (null == confName || confName.trim().length() == 0){
+        if (null == confName || confName.trim().isEmpty()){
             throw new IllegalArgumentException(
-                    String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_NAME_CAN_NOT_EMPTY, confName));
+                    String.format("confName cannot be null or empty, got: %s", confName));
         }
         for (NginxConfItem item: listSubItems()){
             if (item.getName().equalsIgnoreCase(confName)){
@@ -82,9 +80,9 @@ public interface NginxConfItem {
      *      子配置项列表
      */
     default List<NginxConfItem> findAll(String confName){
-        if (null == confName || confName.trim().length() == 0){
+        if (null == confName || confName.trim().isEmpty()){
             throw new IllegalArgumentException(
-                    String.format(Configure.MESSAGE_TEMPLATE.CONF_ITEM_NAME_CAN_NOT_EMPTY, confName));
+                    String.format("confName cannot be null or empty, got: %s", confName));
         }
         List<NginxConfItem> items = new ArrayList<>();
         for (NginxConfItem item: listSubItems()){

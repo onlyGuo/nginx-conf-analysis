@@ -1,26 +1,26 @@
-English | [中文](README_CN.md)
+[English](README.md) | 中文
 
 # Nginx Config Analysis
 
-A powerful Nginx configuration file parsing library that parses Nginx config files into Java objects, supporting read, modify, and re-serialization.
+一个强大的 Nginx 配置文件解析库，可以将 Nginx 配置文件解析为 Java 对象，支持读取、修改和重新序列化。
 
 [![Maven Central](https://img.shields.io/maven-central/v/icoding.ink/nginx-analysis.svg)](https://central.sonatype.com/artifact/icoding.ink/nginx-analysis)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
-## Features
+## 特性
 
-- Complete parsing of all Nginx configuration file elements
-- Support for all Nginx block types (http, server, location, upstream, etc.)
-- Preserves original format (comments, empty lines, indentation)
-- Supports modification and re-serialization
-- Type-safe API with specialized methods for different block types
-- Zero dependencies, pure Java implementation
+- 完整解析 Nginx 配置文件所有元素
+- 支持所有 Nginx 块类型（http, server, location, upstream 等）
+- 保留原始格式（注释、空行、缩进）
+- 支持修改配置后重新序列化
+- 类型安全的 API，针对不同块类型提供专用方法
+- 零依赖，纯 Java 实现
 
-## Requirements
+## 环境要求
 
-- Java 17 or higher
+- Java 17 或更高版本
 
-## Installation
+## 安装
 
 ### Maven
 
@@ -38,15 +38,15 @@ A powerful Nginx configuration file parsing library that parses Nginx config fil
 implementation 'icoding.ink:nginx-analysis:1.0.2'
 ```
 
-## Quick Start
+## 快速开始
 
-### 1. Parse Configuration File
+### 1. 解析配置文件
 
 ```java
 import ink.icoding.nginx.core.NginxConfig;
 import ink.icoding.nginx.entity.*;
 
-// Parse from string
+// 从字符串解析
 String nginxConf = """
     http {
         server {
@@ -60,12 +60,12 @@ String nginxConf = """
     """;
 NginxConfig config = NginxConfig.parse(nginxConf);
 
-// Parse from file
+// 从文件解析
 String content = Files.readString(Path.of("/etc/nginx/nginx.conf"));
 NginxConfig config = NginxConfig.parse(content);
 ```
 
-### 2. Iterate Configuration Items
+### 2. 遍历配置项
 
 ```java
 for (NginxConfItem item : config.getItems()) {
@@ -73,21 +73,21 @@ for (NginxConfItem item : config.getItems()) {
 }
 ```
 
-### 3. Serialize Back to String
+### 3. 序列化回字符串
 
 ```java
 String output = config.toString();
 System.out.println(output);
 ```
 
-## Entity Class Structure
+## 实体类结构
 
 ```
-NginxConfItem (Interface)
-├── NginxInlineConfItem      # Inline config (listen 80;)
-├── NginxCommentsConfItem    # Comment (# comment)
-├── NginxEmptyLineConfItem   # Empty line
-└── NginxBlockConfItem       # Block config (parent class)
+NginxConfItem (接口)
+├── NginxInlineConfItem      # 行内配置 (listen 80;)
+├── NginxCommentsConfItem    # 注释 (# comment)
+├── NginxEmptyLineConfItem   # 空行
+└── NginxBlockConfItem       # 块配置 (父类)
     ├── NginxHttpConfItem    # http { ... }
     ├── NginxServerConfItem  # server { ... }
     ├── NginxLocationConfItem # location /path { ... }
@@ -101,19 +101,19 @@ NginxConfItem (Interface)
     └── NginxLimitExceptConfItem # limit_except GET { ... }
 ```
 
-## Usage Examples
+## 使用示例
 
-### Example 1: Get All Server Configurations
+### 示例 1：获取所有 Server 配置
 
 ```java
 NginxConfig config = NginxConfig.parse(nginxConf);
 
-// Iterate top-level configurations
+// 遍历顶级配置
 for (NginxConfItem item : config.getItems()) {
     if (item instanceof NginxHttpConfItem) {
         NginxHttpConfItem http = (NginxHttpConfItem) item;
 
-        // Get all servers
+        // 获取所有 server
         for (NginxServerConfItem server : http.getServers()) {
             System.out.println("Server: " + server.getServerNames());
             System.out.println("Ports: " + server.getListenPorts());
@@ -123,33 +123,33 @@ for (NginxConfItem item : config.getItems()) {
 }
 ```
 
-### Example 2: Modify Server Configuration
+### 示例 2：修改 Server 配置
 
 ```java
 NginxConfig config = NginxConfig.parse(nginxConf);
 
-// Get first http block
+// 获取第一个 http 块
 NginxHttpConfItem http = (NginxHttpConfItem) config.getItems().get(0);
 
-// Get first server
+// 获取第一个 server
 NginxServerConfItem server = http.getServers().get(0);
 
-// Modify server_name
+// 修改 server_name
 server.setServerNames("new-domain.com", "www.new-domain.com");
 
-// Add new listen port
+// 添加新的 listen 端口
 server.addListenPort("8080");
 
-// Output modified configuration
+// 输出修改后的配置
 System.out.println(config.toString());
 ```
 
-### Example 3: Handle Location Configuration
+### 示例 3：处理 Location 配置
 
 ```java
 NginxServerConfItem server = ...;
 
-// Get all locations
+// 获取所有 location
 for (NginxLocationConfItem location : server.getLocations()) {
     System.out.println("Path: " + location.getPath());
     System.out.println("Modifier: " + location.getModifier());
@@ -158,19 +158,19 @@ for (NginxLocationConfItem location : server.getLocations()) {
 }
 ```
 
-### Example 4: Configure Upstream
+### 示例 4：配置 Upstream
 
 ```java
 NginxHttpConfItem http = ...;
 
-// Get all upstreams
+// 获取所有 upstream
 for (NginxUpstreamConfItem upstream : http.getUpstreams()) {
     System.out.println("Name: " + upstream.getName());
     System.out.println("Method: " + upstream.getLoadBalancingMethod());
     System.out.println("Servers: " + upstream.getServerAddresses());
 }
 
-// Create new upstream
+// 创建新的 upstream
 NginxUpstreamConfItem newUpstream = new NginxUpstreamConfItem("upstream new_backend {\n}");
 newUpstream.addServer("192.168.1.10:8080", "weight=3");
 newUpstream.addServer("192.168.1.11:8080");
@@ -178,7 +178,7 @@ newUpstream.setLoadBalancingMethod("least_conn");
 http.addItem(newUpstream);
 ```
 
-### Example 5: Use Map Configuration
+### 示例 5：使用 Map 配置
 
 ```java
 NginxHttpConfItem http = ...;
@@ -193,7 +193,7 @@ for (NginxConfItem item : http.getItems()) {
 }
 ```
 
-### Example 6: Conditional Judgment (if)
+### 示例 6：条件判断 (if)
 
 ```java
 NginxServerConfItem server = ...;
@@ -209,40 +209,40 @@ for (NginxConfItem item : server.listSubItems()) {
 }
 ```
 
-### Example 7: Find Specific Configuration Items
+### 示例 7：查找特定配置项
 
 ```java
 NginxBlockConfItem block = ...;
 
-// Find single configuration item
+// 查找单个配置项
 NginxConfItem listen = block.getItem("listen");
 if (listen instanceof NginxInlineConfItem) {
     System.out.println("Listen: " + ((NginxInlineConfItem) listen).getValue());
 }
 
-// Find all items with same name
+// 查找所有同名配置项
 List<NginxConfItem> serverNames = block.getItems("server_name");
 for (NginxConfItem item : serverNames) {
     System.out.println("Server Name: " + ((NginxInlineConfItem) item).getValue());
 }
 ```
 
-### Example 8: Add and Delete Configuration Items
+### 示例 8：添加和删除配置项
 
 ```java
 NginxServerConfItem server = ...;
 
-// Add new configuration item
+// 添加新的配置项
 server.addItem(new NginxInlineConfItem("worker_connections 1024;"));
 
-// Delete configuration item
+// 删除配置项
 server.removeItem(server.getItem("old_setting"));
 
-// Add comment
+// 添加注释
 server.addItem(new NginxCommentsConfItem("# This is a comment"));
 ```
 
-### Example 9: Stream Configuration (TCP/UDP Proxy)
+### 示例 9：Stream 配置（TCP/UDP 代理）
 
 ```java
 NginxConfig config = NginxConfig.parse(streamConf);
@@ -263,7 +263,7 @@ for (NginxConfItem item : config.getItems()) {
 }
 ```
 
-## Complete Example: Read, Modify, Save
+## 完整示例：读取、修改、保存
 
 ```java
 import ink.icoding.nginx.core.NginxConfig;
@@ -274,30 +274,30 @@ import java.nio.file.*;
 
 public class NginxConfigModifier {
     public static void main(String[] args) throws IOException {
-        // 1. Read configuration file
+        // 1. 读取配置文件
         String content = Files.readString(Path.of("/etc/nginx/nginx.conf"));
         NginxConfig config = NginxConfig.parse(content);
 
-        // 2. Modify configuration
+        // 2. 修改配置
         for (NginxConfItem item : config.getItems()) {
             if (item instanceof NginxHttpConfItem) {
                 modifyHttpBlock((NginxHttpConfItem) item);
             }
         }
 
-        // 3. Save modified configuration
+        // 3. 保存修改后的配置
         Files.writeString(Path.of("/etc/nginx/nginx.conf.new"), config.toString());
     }
 
     private static void modifyHttpBlock(NginxHttpConfItem http) {
         for (NginxServerConfItem server : http.getServers()) {
-            // Modify server_name
+            // 修改 server_name
             List<String> names = server.getServerNames();
             if (names.contains("old-domain.com")) {
                 server.setServerNames("new-domain.com");
             }
 
-            // Add security headers
+            // 添加安全头
             server.addItem(new NginxInlineConfItem(
                 "add_header X-Frame-Options \"SAMEORIGIN\" always;"));
         }
@@ -305,74 +305,74 @@ public class NginxConfigModifier {
 }
 ```
 
-## API Reference
+## API 参考
 
 ### NginxConfig
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `parse(String content)` | `NginxConfig` | Static method, parse configuration content |
-| `getItems()` | `List<NginxConfItem>` | Get all top-level configuration items |
-| `toString()` | `String` | Serialize to configuration string |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `parse(String content)` | `NginxConfig` | 静态方法，解析配置内容 |
+| `getItems()` | `List<NginxConfItem>` | 获取所有顶级配置项 |
+| `toString()` | `String` | 序列化为配置字符串 |
 
 ### NginxBlockConfItem
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `getName()` | `String` | Get block name |
-| `getValues()` | `List<String>` | Get block parameters |
-| `getFirstValue()` | `String` | Get first parameter |
-| `listSubItems()` | `List<NginxConfItem>` | Get sub-configuration items |
-| `getItem(String name)` | `NginxConfItem` | Find sub-item by name |
-| `getItems(String name)` | `List<NginxConfItem>` | Find all sub-items by name |
-| `addItem(NginxConfItem)` | `void` | Add sub-configuration item |
-| `removeItem(NginxConfItem)` | `boolean` | Remove sub-configuration item |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `getName()` | `String` | 获取块名称 |
+| `getValues()` | `List<String>` | 获取块参数 |
+| `getFirstValue()` | `String` | 获取第一个参数 |
+| `listSubItems()` | `List<NginxConfItem>` | 获取子配置项 |
+| `getItem(String name)` | `NginxConfItem` | 按名称查找子项 |
+| `getItems(String name)` | `List<NginxConfItem>` | 按名称查找所有子项 |
+| `addItem(NginxConfItem)` | `void` | 添加子配置项 |
+| `removeItem(NginxConfItem)` | `boolean` | 删除子配置项 |
 
 ### NginxServerConfItem
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `getListenPorts()` | `List<String>` | Get listen ports |
-| `getServerNames()` | `List<String>` | Get server names |
-| `setServerNames(String...)` | `void` | Set server names |
-| `getLocations()` | `List<NginxLocationConfItem>` | Get all locations |
-| `isSslEnabled()` | `boolean` | Check if SSL is enabled |
-| `getRoot()` | `String` | Get root directory |
-| `setRoot(String)` | `void` | Set root directory |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `getListenPorts()` | `List<String>` | 获取监听端口 |
+| `getServerNames()` | `List<String>` | 获取服务器名称 |
+| `setServerNames(String...)` | `void` | 设置服务器名称 |
+| `getLocations()` | `List<NginxLocationConfItem>` | 获取所有 location |
+| `isSslEnabled()` | `boolean` | 是否启用 SSL |
+| `getRoot()` | `String` | 获取根目录 |
+| `setRoot(String)` | `void` | 设置根目录 |
 
 ### NginxLocationConfItem
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `getPath()` | `String` | Get match path |
-| `getModifier()` | `String` | Get match modifier |
-| `isRegex()` | `boolean` | Check if regex match |
-| `isExact()` | `boolean` | Check if exact match |
-| `isNamed()` | `boolean` | Check if named location |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `getPath()` | `String` | 获取匹配路径 |
+| `getModifier()` | `String` | 获取匹配修饰符 |
+| `isRegex()` | `boolean` | 是否为正则匹配 |
+| `isExact()` | `boolean` | 是否为精确匹配 |
+| `isNamed()` | `boolean` | 是否为命名位置 |
 
 ### NginxUpstreamConfItem
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `getServerAddresses()` | `List<String>` | Get all server addresses |
-| `addServer(String, String...)` | `void` | Add server |
-| `removeServer(String)` | `boolean` | Remove server |
-| `getLoadBalancingMethod()` | `String` | Get load balancing method |
-| `setLoadBalancingMethod(String)` | `void` | Set load balancing method |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `getServerAddresses()` | `List<String>` | 获取所有服务器地址 |
+| `addServer(String, String...)` | `void` | 添加服务器 |
+| `removeServer(String)` | `boolean` | 删除服务器 |
+| `getLoadBalancingMethod()` | `String` | 获取负载均衡方法 |
+| `setLoadBalancingMethod(String)` | `void` | 设置负载均衡方法 |
 
 ### NginxHttpConfItem
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `getServers()` | `List<NginxServerConfItem>` | Get all servers |
-| `getUpstreams()` | `List<NginxUpstreamConfItem>` | Get all upstreams |
-| `getTypes()` | `NginxTypesConfItem` | Get types block |
-| `isGzipEnabled()` | `boolean` | Check if gzip is enabled |
+| 方法 | 返回类型 | 描述 |
+|------|----------|------|
+| `getServers()` | `List<NginxServerConfItem>` | 获取所有 server |
+| `getUpstreams()` | `List<NginxUpstreamConfItem>` | 获取所有 upstream |
+| `getTypes()` | `NginxTypesConfItem` | 获取 types 块 |
+| `isGzipEnabled()` | `boolean` | 是否启用 gzip |
 
-## Supported Nginx Configuration Elements
+## 支持的 Nginx 配置元素
 
-| Element | Entity Class | Example |
-|---------|--------------|---------|
+| 元素 | 实体类 | 示例 |
+|------|--------|------|
 | http | `NginxHttpConfItem` | `http { ... }` |
 | server | `NginxServerConfItem` | `server { ... }` |
 | location | `NginxLocationConfItem` | `location /api/ { ... }` |
@@ -384,18 +384,18 @@ public class NginxConfigModifier {
 | if | `NginxIfConfItem` | `if ($host = 'example.com') { ... }` |
 | types | `NginxTypesConfItem` | `types { ... }` |
 | limit_except | `NginxLimitExceptConfItem` | `limit_except GET { ... }` |
-| comment | `NginxCommentsConfItem` | `# comment` |
-| empty line | `NginxEmptyLineConfItem` | `` |
-| inline config | `NginxInlineConfItem` | `listen 80;` |
+| 注释 | `NginxCommentsConfItem` | `# comment` |
+| 空行 | `NginxEmptyLineConfItem` | `` |
+| 行内配置 | `NginxInlineConfItem` | `listen 80;` |
 
-## License
+## 许可证
 
-This project is licensed under the [GNU General Public License v3.0](LICENSE).
+本项目使用 [GNU General Public License v3.0](LICENSE) 许可证。
 
-## Contributing
+## 贡献
 
-Issues and Pull Requests are welcome!
+欢迎提交 Issue 和 Pull Request！
 
-## Author
+## 作者
 
 - guoshengkai (719348277@qq.com)

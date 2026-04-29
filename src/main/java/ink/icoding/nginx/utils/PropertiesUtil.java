@@ -1,4 +1,4 @@
-package com.github.onlyguo.nginx.utils;
+package ink.icoding.nginx.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

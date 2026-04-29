@@ -1,4 +1,4 @@
-package com.github.onlyguo.nginx.entity;
+package ink.icoding.nginx.entity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +25,17 @@ public class NginxCommentsConfItem implements NginxConfItem {
 
     @Override
     public String getName() {
-        return comment.trim().substring(1).trim();
+        String trimmed = comment.trim();
+        int index = trimmed.indexOf("#");
+        if (index >= 0 && index < trimmed.length() - 1) {
+            return trimmed.substring(index + 1).trim();
+        }
+        return "";
     }
 
     @Override
     public String toString() {
-        return comment;
+        return comment.trim();
     }
 
     @Override

@@ -1,6 +1,6 @@
-package com.github.onlyguo.nginx.core;
+package ink.icoding.nginx.core;
 
-import com.github.onlyguo.nginx.entity.NginxConfItem;
+import ink.icoding.nginx.entity.NginxConfItem;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,5 +42,25 @@ public class NginxConfig {
      */
     public List<NginxConfItem> getItems() {
         return items;
+    }
+
+    /**
+     * 将配置文件序列化为字符串
+     * Serialize configuration file to string
+     * @return
+     *      配置文件内容
+     *      configuration file content
+     */
+    public String toConfString() {
+        StringBuilder sb = new StringBuilder();
+        for (NginxConfItem item : items) {
+            sb.append(item.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return toConfString();
     }
 }
