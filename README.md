@@ -4,7 +4,7 @@ English | [中文](README_CN.md)
 
 A powerful Nginx configuration file parsing library that parses Nginx config files into Java objects, supporting read, modify, and re-serialization.
 
-[![Maven Central](https://img.shields.io/maven-central/v/icoding.ink/nginx-analysis.svg)](https://central.sonatype.com/artifact/icoding.ink/nginx-analysis)
+[![Maven Central](https://img.shields.io/maven-central/v/ink.icoding/nginx-analysis.svg)](https://central.sonatype.com/artifact/ink.icoding/nginx-analysis)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 ## Features
@@ -26,7 +26,7 @@ A powerful Nginx configuration file parsing library that parses Nginx config fil
 
 ```xml
 <dependency>
-    <groupId>icoding.ink</groupId>
+    <groupId>ink.icoding</groupId>
     <artifactId>nginx-analysis</artifactId>
     <version>1.0.2</version>
 </dependency>
@@ -35,7 +35,7 @@ A powerful Nginx configuration file parsing library that parses Nginx config fil
 ### Gradle
 
 ```groovy
-implementation 'icoding.ink:nginx-analysis:1.0.2'
+implementation 'ink.icoding:nginx-analysis:1.0.2'
 ```
 
 ## Quick Start

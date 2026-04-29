@@ -4,7 +4,7 @@
 
 一个强大的 Nginx 配置文件解析库，可以将 Nginx 配置文件解析为 Java 对象，支持读取、修改和重新序列化。
 
-[![Maven Central](https://img.shields.io/maven-central/v/icoding.ink/nginx-analysis.svg)](https://central.sonatype.com/artifact/icoding.ink/nginx-analysis)
+[![Maven Central](https://img.shields.io/maven-central/v/ink.icoding/nginx-analysis.svg)](https://central.sonatype.com/artifact/ink.icoding/nginx-analysis)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 ## 特性
@@ -26,7 +26,7 @@
 
 ```xml
 <dependency>
-    <groupId>icoding.ink</groupId>
+    <groupId>ink.icoding</groupId>
     <artifactId>nginx-analysis</artifactId>
     <version>1.0.2</version>
 </dependency>
@@ -35,7 +35,7 @@
 ### Gradle
 
 ```groovy
-implementation 'icoding.ink:nginx-analysis:1.0.2'
+implementation 'ink.icoding:nginx-analysis:1.0.2'
 ```
 
 ## 快速开始
